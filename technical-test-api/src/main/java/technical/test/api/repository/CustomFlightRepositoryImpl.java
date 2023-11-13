@@ -1,6 +1,8 @@
 package technical.test.api.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -14,6 +16,12 @@ public class CustomFlightRepositoryImpl implements CustomFlightRepository {
     @Autowired
     public CustomFlightRepositoryImpl(ReactiveMongoTemplate mongoTemplate){
         this.mongoTemplate = mongoTemplate;
+    }
+    
+    @Override
+    public Flux<FlightRecord> findAllByPage(Pageable pageable) {
+        Query query = new Query();
+        return mongoTemplate.find(query, FlightRecord.class);
     }
 
     @Override

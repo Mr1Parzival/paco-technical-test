@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,12 @@ public class FlightEndpoint {
     @GetMapping
     public Flux<FlightRepresentation> getAllFlights() {
         return flightFacade.getAllFlights();
+    }
+
+    @GetMapping(value = "/pageable", produces = "application/json")
+    public Flux<FlightRepresentation> getAllFlightByPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "6") int sizePerPage) {
+        Pageable pageable = PageRequest.of(page, sizePerPage);
+        return flightFacade.getAllFlightsByPage(pageable);
     }
 
     @GetMapping(value = "/filterprice", produces = "application/json")

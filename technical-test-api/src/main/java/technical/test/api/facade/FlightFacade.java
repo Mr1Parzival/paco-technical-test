@@ -1,6 +1,8 @@
 package technical.test.api.facade;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -22,6 +24,20 @@ public class FlightFacade {
 
     public Flux<FlightRepresentation> getAllFlights() {
         return flightService.getAllFlights()
+                .flatMap(flightRecord -> airportService.findByIataCode(flightRecord.getOrigin())
+                        .zipWith(airportService.findByIataCode(flightRecord.getDestination()))
+                        .flatMap(tuple -> {
+                            AirportRecord origin = tuple.getT1();
+                            AirportRecord destination = tuple.getT2();
+                            FlightRepresentation flightRepresentation = this.flightMapper.convert(flightRecord);
+                            flightRepresentation.setOrigin(this.airportMapper.convert(origin));
+                            flightRepresentation.setDestination(this.airportMapper.convert(destination));
+                            return Mono.just(flightRepresentation);
+                        }));
+    }
+
+    public Flux<FlightRepresentation> getAllFlightsByPage(Pageable pageable) {
+        return flightService.getAllFlightsByPage(pageable)
                 .flatMap(flightRecord -> airportService.findByIataCode(flightRecord.getOrigin())
                         .zipWith(airportService.findByIataCode(flightRecord.getDestination()))
                         .flatMap(tuple -> {

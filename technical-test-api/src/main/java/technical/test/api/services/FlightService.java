@@ -1,6 +1,8 @@
 package technical.test.api.services;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,6 +16,10 @@ public class FlightService {
 
     public Flux<FlightRecord> getAllFlights() {
         return flightRepository.findAll();
+    }
+
+    public Flux<FlightRecord> getAllFlightsByPage(Pageable pageable) {
+        return flightRepository.findAllByPage(pageable);
     }
 
     public Flux<FlightRecord> getFlightsByPrice(double minPrice, double maxPrice) {
