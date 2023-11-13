@@ -2,6 +2,8 @@ package technical.test.api.endpoints;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,14 +28,14 @@ public class FlightEndpoint {
         return flightFacade.getAllFlights();
     }
 
-    @GetMapping
-    public Flux<FlightRepresentation> getFlightsByPrice(@RequestParam double minPrice, double maxPrice) {
-        return flightFacade.getFlightsByPrice(minPrice, maxPrice);
+    @GetMapping(value = "/filterprice", produces = "application/json")
+    public Flux<FlightRepresentation> getFlightsByPrice(@RequestParam Map<String, String> filterPrice) {
+        return flightFacade.getFlightsByPrice(Double.valueOf(filterPrice.get("minPrice")), Double.valueOf(filterPrice.get("maxPrice")));
     }
 
-    @GetMapping
-    public Flux<FlightRepresentation> getFlightByLocalisation(@RequestParam String origin, String destination) {
-        return flightFacade.getFlightsByLocalisation(origin, destination);
+    @GetMapping(value = "/filterlocalsiation")
+    public Flux<FlightRepresentation> getFlightByLocalisation(@RequestParam Map<String, String> filterLocalisation) {
+        return flightFacade.getFlightsByLocalisation(filterLocalisation.get("origin"), filterLocalisation.get("destination"));
     }
 
     @PostMapping(value = "/add", produces = "application/json")

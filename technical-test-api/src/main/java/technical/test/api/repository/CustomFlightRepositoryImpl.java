@@ -18,7 +18,7 @@ public class CustomFlightRepositoryImpl implements CustomFlightRepository {
 
     @Override
     public Flux<FlightRecord> findByPrice(double minPrice, double maxPrice){
-        Query query = new Query();
+        Query query = new Query(Criteria.where("price").gt(minPrice).lt(maxPrice));   
         return mongoTemplate.find(query, FlightRecord.class);
     }
 
@@ -32,7 +32,7 @@ public class CustomFlightRepositoryImpl implements CustomFlightRepository {
         } else if(destination != null){
             query = new Query(Criteria.where("destination").is(destination));    
         } else {
-            query = new Query();
+            query = null;
         }
         return mongoTemplate.find(query, FlightRecord.class);
     }
