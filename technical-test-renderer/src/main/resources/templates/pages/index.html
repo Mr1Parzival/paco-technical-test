@@ -66,6 +66,9 @@
             font-family: sans-serif;
             font-size: 0.8rem;
         }
+        img.image {
+            max-width: 200px;
+        }
     </style>
 </head>
 <body>
@@ -90,7 +93,7 @@
                 <th th:text="${flight.origin.name}"></th>
                 <th th:text="${flight.destination.name}"></th>
                 <th th:text="${flight.price}"></th>
-                <th th:text="${flight.photo}"></th>
+                <th><img th:src="${flight.image}" alt="toto" class="image"></th>
             </tr>
         </table>
     </ul>
