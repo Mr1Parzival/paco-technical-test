@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{decorators/master}"
+xmlns:layout="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f7fc;
+            color: #333;
+        }
+
+        header {
+            background-color: #3498db;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+
+        section {
+            padding: 40px;
+        }
+
+        footer {
+            background-color: #3498db;
+            padding: 10px 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+        }
+
+        td,
+        th {
+            border: 1px solid rgb(190, 190, 190);
+            padding: 10px;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #eee;
+        }
+
+        th[scope='col'] {
+            background-color: #696969;
+            color: #fff;
+        }
+
+        caption {
+            padding: 10px;
+            caption-side: bottom;
+        }
+
+        table {
+            border-collapse: collapse;
+            border: 2px solid rgb(200, 200, 200);
+            letter-spacing: 1px;
+            font-family: sans-serif;
+            font-size: 0.8rem;
+        }
+        img.image {
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Administration de Vols</h1>
+    </header>
+    
+    <section>
+        <!-- Contenu de la recherche de vols -->
+        <h2>Bienvenue sur l'espace d'administration de vols</h2>
+        <!-- Ajoutez ici le formulaire de recherche de vols ou d'autres éléments pertinents -->
+        <form method="post" th:action="@{/admin}" th:object="${newFlight}" class="col card p-3 mb-5">
+            <div class="form-group">
+                <label for="id">Id</label>
+                <input id="id" placeholder="Enter Id" required type="text" value="3fa85f64-5717-4562-b3fc-2c963f66afa7" th:flied="*{id}"/>
+            </div>
+            <div class="form-group">
+                <label for="departure">departure</label>
+                <input id="departure" placeholder="Enter departure" required type="text" value="2023-11-12T19:29:52.419" th:flied="*{departure}"/>
+            </div>
+            <div class="form-group">
+                <label for="arrival">arrival</label>
+                <input id="arrival" placeholder="Enter arrival" required type="text" value="2023-11-12T19:29:52.419" th:flied="*{arrival}"/>
+            </div>
+            <div class="form-group">
+                <label for="price">price</label>
+                <input id="price" placeholder="Enter price" required type="text" value="12.5" th:flied="*{price}"/>
+            </div>
+            <div class="form-group">
+                <label for="image">image</label>
+                <input id="image" placeholder="Enter image" required type="text" value="https://www.hdwallpapers.in/download/high_resolution_flying_eagle_4k_8k_hd-3840x2160.jpg" th:flied="*{image}"/>
+            </div>
+            <div class="form-group">
+                <label for="origin">origin</label>
+                <input id="origin" placeholder="Enter origin" required type="text" value="JFK" th:flied="*{origin}"/>
+            </div>
+            <div class="form-group">
+                <label for="destination">destination</label>
+                <input id="destination" placeholder="Enter destination" required type="text" value="PEK" th:flied="*{destination}"/>
+            </div>
+        </div>
+        <input type="submit" value="Create Flight">
+    </form>
+    </section>
+    
+    <footer>
+        <p>&copy; 2023 Recherche de Vols. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

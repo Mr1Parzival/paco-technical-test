@@ -12,4 +12,5 @@ public class TechnicalApiProperties {
     private String basePath;
     private String flightPath;
     private String flightByFiltersPath;
+    private String adminPath;
 }
