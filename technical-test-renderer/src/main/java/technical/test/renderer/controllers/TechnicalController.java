@@ -52,4 +52,6 @@ public class TechnicalController {
         model.addAttribute("flights", this.flightFacade.getFlights());
         return Mono.just("redirect:/");
     }
+
+    
 }
