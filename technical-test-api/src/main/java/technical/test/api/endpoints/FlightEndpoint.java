@@ -32,6 +32,8 @@ public class FlightEndpoint {
     @GetMapping(value = "/filters", produces = "application/json")
     public Flux<FlightRepresentation> getFlightByFilters(@RequestParam Map<String, String> filters) {
         System.err.println("GET HTTP : getFlightByFilters");
+        System.err.println("Filters :" + filters.toString());
+
         return flightFacade.getFlightsByFilters(filters);
     }
 

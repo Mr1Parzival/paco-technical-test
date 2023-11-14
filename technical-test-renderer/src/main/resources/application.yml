@@ -13,5 +13,5 @@ webclient:
       base-path: /
       flight-path: /flight
       flight-by-filters-path: /flight/filters
-      adminPath: /flight/add
+      admin-Path: /flight/add
 

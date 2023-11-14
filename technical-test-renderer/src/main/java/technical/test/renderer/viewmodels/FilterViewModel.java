@@ -13,5 +13,4 @@ public class FilterViewModel {
     private String destinationLoc;
     private LocalDateTime dateStart;
     private LocalDateTime dateEnd;
-
 }

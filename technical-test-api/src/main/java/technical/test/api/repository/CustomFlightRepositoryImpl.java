@@ -25,18 +25,37 @@ public class CustomFlightRepositoryImpl implements CustomFlightRepository {
         Criteria critPrice = new Criteria();
         Criteria critLoc = new Criteria();
         Criteria critDate = new Criteria();
-
-        if(filters.get("minPrice") != null || filters.get("maxPrice") != null) {
+        // TODO: revoir les inclusions
+        if(filters.get("minPrice") != "" && filters.get("maxPrice") != "") {
             critPrice = Criteria.where("price").gt(Double.valueOf(filters.get("minPrice"))).lt(Double.valueOf(filters.get("maxPrice")));
             query.addCriteria(critPrice);
+        } else if(filters.get("minPrice") != "") {
+            critPrice = Criteria.where("price").gt(Double.valueOf(filters.get("minPrice")));
+            query.addCriteria(critPrice);
+        } else if(filters.get("maxPrice") != "") {
+            critPrice = Criteria.where("price").lt(Double.valueOf(filters.get("maxPrice")));
+            query.addCriteria(critPrice);
         }
-        if(filters.get("originLoc") != null || filters.get("destinationLoc") != null){
-            // TODO: revoir les inclusions
-            critLoc = Criteria.where("origin").is(filters.get("originLoc")).orOperator(Criteria.where("destination").is(filters.get("destinationLoc")));
+
+        if(filters.get("originLoc") != "" && filters.get("destinationLoc") != ""){
+            critLoc = Criteria.where("origin").is(filters.get("originLoc")).andOperator(Criteria.where("destination").is(filters.get("destinationLoc")));
+            query.addCriteria(critLoc);
+        } else if(filters.get("originLoc") != ""){
+            critLoc = Criteria.where("origin").is(filters.get("originLoc"));
+            query.addCriteria(critLoc);
+        } else if (filters.get("destinationLoc") != "") {
+            critLoc = Criteria.where("destination").is(filters.get("destinationLoc"));
             query.addCriteria(critLoc);
         }
-        if(filters.get("dateStart") != null || filters.get("dateEnd") != null){
+
+        if(filters.get("dateStart") != "" && filters.get("dateEnd") != ""){
             critDate = Criteria.where("departure").is(LocalDateTime.parse(filters.get("dateStart"))).orOperator(Criteria.where("arrival").is(LocalDateTime.parse(filters.get("dateEnd"))));
+            query.addCriteria(critDate);
+        } else if(filters.get("dateStart") != ""){
+            critDate = Criteria.where("departure").is(LocalDateTime.parse(filters.get("dateStart")));
+            query.addCriteria(critDate);
+        } else if(filters.get("dateEnd") != "") {
+            critDate = Criteria.where("arrival").is(LocalDateTime.parse(filters.get("dateEnd")));
             query.addCriteria(critDate);
         }
 

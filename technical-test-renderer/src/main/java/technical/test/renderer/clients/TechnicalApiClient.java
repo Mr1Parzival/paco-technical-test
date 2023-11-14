@@ -20,10 +20,13 @@ public class TechnicalApiClient {
 
     public TechnicalApiClient(TechnicalApiProperties technicalApiProperties, final WebClient.Builder webClientBuilder) {
         this.technicalApiProperties = technicalApiProperties;
-        this.webClient = webClientBuilder.build();
+        // this.webClient = webClientBuilder.build();
+        this.webClient = WebClient.builder().baseUrl(technicalApiProperties.getUrl()).build();
+        log.info("uri base : " + technicalApiProperties.getUrl());
     }
 
     public Flux<FlightViewModel> getFlights() {
+        log.info("uri : " + technicalApiProperties.getFlightPath());
         return webClient
                 .get()
                 .uri(technicalApiProperties.getUrl() + technicalApiProperties.getFlightPath())
@@ -32,14 +35,23 @@ public class TechnicalApiClient {
     }
 
     public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
+        log.info("uri : " + technicalApiProperties.getFlightByFiltersPath());
         return webClient
                 .get()
-                .uri(technicalApiProperties.getUrl() + technicalApiProperties.getFlightByFiltersPath())
+                .uri(uriBuilder -> uriBuilder.path(technicalApiProperties.getFlightByFiltersPath())
+                    .queryParam("minPrice", filters.getMinPrice())
+                    .queryParam("maxPrice", filters.getMaxPrice())
+                    .queryParam("originLoc", filters.getOriginLoc())
+                    .queryParam("destinationLoc", filters.getDestinationLoc())
+                    .queryParam("dateStart", filters.getDateStart())
+                    .queryParam("dateEnd", filters.getDateEnd())
+                    .build())
                 .retrieve()
                 .bodyToFlux(FlightViewModel.class);
     }
 
     public Mono<FlightViewModel> saveFlight(FlightViewModel newFlight) {
+        log.info("uri : " + technicalApiProperties.getAdminPath());
         return webClient
                 .post()
                 .uri(technicalApiProperties.getUrl() + technicalApiProperties.getAdminPath())

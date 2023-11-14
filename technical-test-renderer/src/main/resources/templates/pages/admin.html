@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" layout:decorate="~{decorators/master}"
+<html lang="fr" layout:decorate="~{decorators/master}"
 xmlns:layout="http://www.w3.org/1999/xhtml"
 xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
@@ -85,31 +85,31 @@ xmlns:th="http://www.w3.org/1999/xhtml">
         <form method="post" th:action="@{/admin}" th:object="${newFlight}" class="col card p-3 mb-5">
             <div class="form-group">
                 <label for="id">Id</label>
-                <input id="id" placeholder="Enter Id" required type="text" value="3fa85f64-5717-4562-b3fc-2c963f66afa7" th:flied="*{id}"/>
+                <input id="id" placeholder="Enter Id" required type="text" th:value="3fa85f64-5717-4562-b3fc-2c963f66afa7" th:field="*{id}"/>
             </div>
             <div class="form-group">
                 <label for="departure">departure</label>
-                <input id="departure" placeholder="Enter departure" required type="text" value="2023-11-12T19:29:52.419" th:flied="*{departure}"/>
+                <input id="departure" placeholder="Enter departure" required type="datetime-local" value="2023-11-12T19:29:52.419" th:field="*{departure}"/>
             </div>
             <div class="form-group">
                 <label for="arrival">arrival</label>
-                <input id="arrival" placeholder="Enter arrival" required type="text" value="2023-11-12T19:29:52.419" th:flied="*{arrival}"/>
+                <input id="arrival" placeholder="Enter arrival" required type="datetime-local" value="2023-11-12T19:29:52.419" th:field="*{arrival}"/>
             </div>
             <div class="form-group">
                 <label for="price">price</label>
-                <input id="price" placeholder="Enter price" required type="text" value="12.5" th:flied="*{price}"/>
+                <input id="price" placeholder="Enter price" required type="text" value="12.5" th:field="*{price}"/>
             </div>
             <div class="form-group">
                 <label for="image">image</label>
-                <input id="image" placeholder="Enter image" required type="text" value="https://www.hdwallpapers.in/download/high_resolution_flying_eagle_4k_8k_hd-3840x2160.jpg" th:flied="*{image}"/>
+                <input id="image" placeholder="Enter image" required type="text" value="https://www.hdwallpapers.in/download/high_resolution_flying_eagle_4k_8k_hd-3840x2160.jpg" th:field="*{image}"/>
             </div>
             <div class="form-group">
                 <label for="origin">origin</label>
-                <input id="origin" placeholder="Enter origin" required type="text" value="JFK" th:flied="*{origin}"/>
+                <input id="origin" placeholder="Enter origin" required type="text" value="JFK" th:field="*{origin}"/>
             </div>
             <div class="form-group">
                 <label for="destination">destination</label>
-                <input id="destination" placeholder="Enter destination" required type="text" value="PEK" th:flied="*{destination}"/>
+                <input id="destination" placeholder="Enter destination" required type="text" value="PEK" th:field="*{destination}"/>
             </div>
         </div>
         <input type="submit" value="Create Flight">
