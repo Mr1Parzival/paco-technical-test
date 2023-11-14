@@ -10,5 +10,7 @@ spring:
 springdoc.api-docs.path: /api-docs
 springdoc.swagger-ui.path: /
 
+logging.level.tomcat: TRACE
+
 server:
   port: 8086

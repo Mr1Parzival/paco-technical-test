@@ -1,6 +1,9 @@
 package technical.test.api.services;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,6 +17,10 @@ public class FlightService {
 
     public Flux<FlightRecord> getAllFlights() {
         return flightRepository.findAll();
+    }
+
+    public Flux<FlightRecord> getFlightsByFilters(Map<String, String> filters) {
+        return flightRepository.findByFilters(filters);
     }
 
     public Flux<FlightRecord> getFlightsByPrice(double minPrice, double maxPrice) {

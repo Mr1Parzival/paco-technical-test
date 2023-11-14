@@ -1,6 +1,9 @@
 package technical.test.api.facade;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -32,6 +35,19 @@ public class FlightFacade {
                             flightRepresentation.setDestination(this.airportMapper.convert(destination));
                             return Mono.just(flightRepresentation);
                         }));
+    }
+
+    public Flux<FlightRepresentation> getFlightsByFilters(Map<String, String> filters) {
+        return flightService.getFlightsByFilters(filters).flatMap(flightRecord -> airportService.findByIataCode(flightRecord.getOrigin())
+                .zipWith(airportService.findByIataCode(flightRecord.getDestination()))
+                .flatMap(tuple -> {
+                    AirportRecord origin = tuple.getT1();
+                    AirportRecord destination = tuple.getT2();
+                    FlightRepresentation flightRepresentation = this.flightMapper.convert(flightRecord);
+                    flightRepresentation.setOrigin(this.airportMapper.convert(origin));
+                    flightRepresentation.setDestination(this.airportMapper.convert(destination));
+                    return Mono.just(flightRepresentation);
+                }));
     }
 
     public Flux<FlightRepresentation> getFlightsByPrice(double minPrice, double maxPrice) {

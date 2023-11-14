@@ -25,7 +25,14 @@ public class FlightEndpoint {
 
     @GetMapping
     public Flux<FlightRepresentation> getAllFlights() {
+        System.err.println("GET HTTP : getAllFlights");
         return flightFacade.getAllFlights();
+    }
+
+    @GetMapping(value = "/filters", produces = "application/json")
+    public Flux<FlightRepresentation> getFlightByFilters(@RequestParam Map<String, String> filters) {
+        System.err.println("GET HTTP : getFlightByFilters");
+        return flightFacade.getFlightsByFilters(filters);
     }
 
     @GetMapping(value = "/filterprice", produces = "application/json")
@@ -40,6 +47,7 @@ public class FlightEndpoint {
 
     @PostMapping(value = "/add", produces = "application/json")
     public Mono<FlightRepresentation> addFlight(@RequestBody FlightRecord newFlight) {
+        System.err.println("POST HTTP : addFlight");
         Mono<FlightRepresentation> flight = flightFacade.addFlight(newFlight);
         if(flight == null) {
             return null;
