@@ -19,14 +19,11 @@ public class FlightService {
         return this.technicalApiClient.getFlights();
     }
 
-<<<<<<< HEAD
     public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
         return this.technicalApiClient.getFlightsByFilters(filters);
     }
 
-=======
     public Mono<FlightViewModel> createFlight(FlightViewModel newFlight) {
         return this.technicalApiClient.saveFlight(newFlight);
     }
->>>>>>> 4ca9165 (add and impl feature create flight)
 }

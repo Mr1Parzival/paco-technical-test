@@ -40,7 +40,7 @@ public class FlightEndpoint {
         return flightFacade.getFlightsByPrice(Double.valueOf(filterPrice.get("minPrice")), Double.valueOf(filterPrice.get("maxPrice")));
     }
 
-    @GetMapping(value = "/filterlocalsiation")
+    @GetMapping(value = "/filterlocalsiation", produces = "application/json")
     public Flux<FlightRepresentation> getFlightByLocalisation(@RequestParam Map<String, String> filterLocalisation) {
         return flightFacade.getFlightsByLocalisation(filterLocalisation.get("origin"), filterLocalisation.get("destination"));
     }
