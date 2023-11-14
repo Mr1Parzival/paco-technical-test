@@ -4,9 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 import technical.test.renderer.properties.TechnicalApiProperties;
-import technical.test.renderer.viewmodels.AirportViewModel;
+import technical.test.renderer.viewmodels.FilterViewModel;
 import technical.test.renderer.viewmodels.FlightViewModel;
 
 @Component
@@ -27,5 +26,14 @@ public class TechnicalApiClient {
                 .uri(technicalApiProperties.getUrl() + technicalApiProperties.getFlightPath())
                 .retrieve()
                 .bodyToFlux(FlightViewModel.class);
+    }
+
+    public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
+        return webClient
+                .get()
+                .uri(technicalApiProperties.getUrl() + technicalApiProperties.getFlightByFiltersPath())
+                .retrieve()
+                .bodyToFlux(FlightViewModel.class);
+
     }
 }

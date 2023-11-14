@@ -3,6 +3,7 @@ package technical.test.renderer.services;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import technical.test.renderer.clients.TechnicalApiClient;
+import technical.test.renderer.viewmodels.FilterViewModel;
 import technical.test.renderer.viewmodels.FlightViewModel;
 
 @Service
@@ -16,4 +17,9 @@ public class FlightService {
     public Flux<FlightViewModel> getFlights() {
         return this.technicalApiClient.getFlights();
     }
+
+    public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
+        return this.technicalApiClient.getFlightsByFilters(filters);
+    }
+
 }
