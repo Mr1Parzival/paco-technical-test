@@ -16,13 +16,13 @@ public class FlightFacade {
         this.flightService = flightService;
     }
 
-    public Flux<FlightViewModel> getFlights() {
-        return this.flightService.getFlights();
+    public Flux<FlightViewModel> getFlights(FilterViewModel filters) {
+        return this.flightService.getFlights(filters);
     }
 
-    public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
-        return this.flightService.getFlightsByFilters(filters);
-    }
+    // public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
+    //     return this.flightService.getFlightsByFilters(filters);
+    // }
     
     public Mono<FlightViewModel> createFlight(FlightViewModel newFlight) {
         return this.flightService.createFlight(newFlight);

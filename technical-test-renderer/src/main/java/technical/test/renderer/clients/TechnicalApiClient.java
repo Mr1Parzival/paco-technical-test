@@ -25,7 +25,22 @@ public class TechnicalApiClient {
         log.info("uri base : " + technicalApiProperties.getUrl());
     }
 
-    public Flux<FlightViewModel> getFlights() {
+    public Flux<FlightViewModel> getFlights(FilterViewModel filters) {
+        if(filters.isNotNull()) {
+            log.info("uri : " + technicalApiProperties.getFlightByFiltersPath());
+            return webClient
+            .get()
+            .uri(uriBuilder -> uriBuilder.path(technicalApiProperties.getFlightByFiltersPath())
+            .queryParam("minPrice", filters.getMinPrice())
+            .queryParam("maxPrice", filters.getMaxPrice())
+            .queryParam("originLoc", filters.getOriginLoc())
+            .queryParam("destinationLoc", filters.getDestinationLoc())
+            .queryParam("dateStart", filters.getDateStart())
+            .queryParam("dateEnd", filters.getDateEnd())
+            .build())
+            .retrieve()
+            .bodyToFlux(FlightViewModel.class);
+        }
         log.info("uri : " + technicalApiProperties.getFlightPath());
         return webClient
                 .get()
@@ -34,21 +49,23 @@ public class TechnicalApiClient {
                 .bodyToFlux(FlightViewModel.class);
     }
 
-    public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
-        log.info("uri : " + technicalApiProperties.getFlightByFiltersPath());
-        return webClient
-                .get()
-                .uri(uriBuilder -> uriBuilder.path(technicalApiProperties.getFlightByFiltersPath())
-                    .queryParam("minPrice", filters.getMinPrice())
-                    .queryParam("maxPrice", filters.getMaxPrice())
-                    .queryParam("originLoc", filters.getOriginLoc())
-                    .queryParam("destinationLoc", filters.getDestinationLoc())
-                    .queryParam("dateStart", filters.getDateStart())
-                    .queryParam("dateEnd", filters.getDateEnd())
-                    .build())
-                .retrieve()
-                .bodyToFlux(FlightViewModel.class);
-    }
+
+
+    // public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
+    //     log.info("uri : " + technicalApiProperties.getFlightByFiltersPath());
+    //     return webClient
+    //             .get()
+    //             .uri(uriBuilder -> uriBuilder.path(technicalApiProperties.getFlightByFiltersPath())
+    //                 .queryParam("minPrice", filters.getMinPrice())
+    //                 .queryParam("maxPrice", filters.getMaxPrice())
+    //                 .queryParam("originLoc", filters.getOriginLoc())
+    //                 .queryParam("destinationLoc", filters.getDestinationLoc())
+    //                 .queryParam("dateStart", filters.getDateStart())
+    //                 .queryParam("dateEnd", filters.getDateEnd())
+    //                 .build())
+    //             .retrieve()
+    //             .bodyToFlux(FlightViewModel.class);
+    // }
 
     public Mono<FlightViewModel> saveFlight(FlightViewModel newFlight) {
         log.info("uri : " + technicalApiProperties.getAdminPath());
