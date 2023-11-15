@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,19 +25,24 @@ public class TechnicalController {
     private FlightFacade flightFacade;
 
     @GetMapping
-    public Mono<String> getMarketPlaceReturnCouponPage(final Model model) {
+    public Mono<String> getMarketPlaceReturnCouponPage(@ModelAttribute FilterViewModel filters, final Model model) {
         log.info("/basepath");
-        model.addAttribute("filters", new FilterViewModel());
-        model.addAttribute("flights", this.flightFacade.getFlights());
+        if(model.getAttribute("filters") == null) {
+            model.addAttribute("filters", new FilterViewModel());
+        } else {
+            model.addAttribute("filters", filters);
+        }
+        model.addAttribute("flights", this.flightFacade.getFlights(filters));
         return Mono.just("pages/index");
     }
 
-    @GetMapping(value= "/filter")
-    public Mono<String> getMarketPlaceByFilters(@ModelAttribute FilterViewModel filters, final Model model) {
-        log.info("/filterpath");
-        model.addAttribute("flights", this.flightFacade.getFlightsByFilters(filters));
-        return Mono.just("redirect:/");
-    }
+    // @GetMapping(value= "/filter")
+    // public Mono<String> getMarketPlaceByFilters(@ModelAttribute FilterViewModel filters, final Model model) {
+    //     log.info("/filterpath");
+    //     model.addAttribute("filters", filters);
+    //     model.addAttribute("flights", this.flightFacade.getFlightsByFilters(filters));
+    //     return Mono.just("redirect:/");
+    // }
     
     @GetMapping(value = "/admin")
     public Mono<String> getAdminPage(Model model) {
@@ -51,7 +55,7 @@ public class TechnicalController {
     public Mono<String> postFlight(@ModelAttribute FlightViewModel newFlight, Model model){
         log.info("/addflightpath");
         Mono<FlightViewModel> flight = flightFacade.createFlight(newFlight);
-        model.addAttribute("flights", this.flightFacade.getFlights());
+        model.addAttribute("flights", this.flightFacade.getFlights(new FilterViewModel()));
         return Mono.just("redirect:/");
     }
 

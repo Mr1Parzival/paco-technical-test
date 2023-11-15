@@ -15,13 +15,13 @@ public class FlightService {
         this.technicalApiClient = technicalApiClient;
     }
 
-    public Flux<FlightViewModel> getFlights() {
-        return this.technicalApiClient.getFlights();
+    public Flux<FlightViewModel> getFlights(FilterViewModel filters) {
+        return this.technicalApiClient.getFlights(filters);
     }
 
-    public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
-        return this.technicalApiClient.getFlightsByFilters(filters);
-    }
+    // public Flux<FlightViewModel> getFlightsByFilters(FilterViewModel filters) {
+    //     return this.technicalApiClient.getFlightsByFilters(filters);
+    // }
 
     public Mono<FlightViewModel> createFlight(FlightViewModel newFlight) {
         return this.technicalApiClient.saveFlight(newFlight);

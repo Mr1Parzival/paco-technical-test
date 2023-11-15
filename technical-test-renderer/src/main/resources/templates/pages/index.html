@@ -83,7 +83,7 @@
     <!-- Ajoutez ici le formulaire de recherche de vols ou d'autres éléments pertinents -->
     <div>
         <p>Selectionnez vos filtre : </p>
-        <form th:action="@{/filter}" th:object="${filters}" method="get">
+        <form th:action="@{/}" th:object="${filters}" method="get">
             <div>
                 <label for="minprice">Min price</label>
                 <input id="minprice" placeholder="Enter Min price" type="text" value="0.0" th:field="*{minPrice}"/>

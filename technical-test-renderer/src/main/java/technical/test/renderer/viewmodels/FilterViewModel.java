@@ -13,4 +13,11 @@ public class FilterViewModel {
     private String destinationLoc;
     private LocalDateTime dateStart;
     private LocalDateTime dateEnd;
+
+    public boolean isNotNull() {
+        if(this.minPrice != null || this.maxPrice != null || this.originLoc != null || this.destinationLoc != null || this.dateStart != null || this.dateEnd != null) {
+            return true;
+        }
+        return false;
+    }
 }
