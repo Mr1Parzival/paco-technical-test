@@ -82,18 +82,14 @@ xmlns:th="http://www.w3.org/1999/xhtml">
         <!-- Contenu de la recherche de vols -->
         <h2>Bienvenue sur l'espace d'administration de vols</h2>
         <!-- Ajoutez ici le formulaire de recherche de vols ou d'autres éléments pertinents -->
-        <form method="post" th:action="@{/admin}" th:object="${newFlight}" class="col card p-3 mb-5">
-            <div class="form-group">
-                <label for="id">Id</label>
-                <input id="id" placeholder="Enter Id" required type="text" th:value="3fa85f64-5717-4562-b3fc-2c963f66afa7" th:field="*{id}"/>
-            </div>
+        <form method="post" th:action="@{/admin/add}" th:object="${newFlight}" class="col card p-3 mb-5">
             <div class="form-group">
                 <label for="departure">departure</label>
-                <input id="departure" placeholder="Enter departure" required type="datetime-local" value="2023-11-12T19:29:52.419" th:field="*{departure}"/>
+                <input id="departure" placeholder="Enter departure" required type="text" value="2023-11-12T19:29:52.419" th:field="*{departure}"/>
             </div>
             <div class="form-group">
                 <label for="arrival">arrival</label>
-                <input id="arrival" placeholder="Enter arrival" required type="datetime-local" value="2023-11-12T19:29:52.419" th:field="*{arrival}"/>
+                <input id="arrival" placeholder="Enter arrival" required type="text" value="2023-11-12T19:29:52.419" th:field="*{arrival}"/>
             </div>
             <div class="form-group">
                 <label for="price">price</label>
@@ -101,7 +97,7 @@ xmlns:th="http://www.w3.org/1999/xhtml">
             </div>
             <div class="form-group">
                 <label for="image">image</label>
-                <input id="image" placeholder="Enter image" required type="text" value="https://www.hdwallpapers.in/download/high_resolution_flying_eagle_4k_8k_hd-3840x2160.jpg" th:field="*{image}"/>
+                <input id="image" placeholder="Enter image" type="text" value="https://www.hdwallpapers.in/download/high_resolution_flying_eagle_4k_8k_hd-3840x2160.jpg" th:field="*{image}"/>
             </div>
             <div class="form-group">
                 <label for="origin">origin</label>

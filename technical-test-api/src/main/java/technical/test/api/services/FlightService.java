@@ -3,6 +3,7 @@ package technical.test.api.services;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -32,6 +33,9 @@ public class FlightService {
     }
 
     public Mono<FlightRecord> addFlights(FlightRecord newFlight) {
+        if(newFlight.getId() == null) {
+            newFlight.setId(UUID.randomUUID());
+        }
         return flightRepository.insert(newFlight);
     }
 }
